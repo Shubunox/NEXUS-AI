@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NEXUS AI — AI Engineering Platform</title>
+<meta name="description" content="NEXUS AI: route, test, orchestrate and observe AI systems in one engineering workspace." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#16181d;--panel:#1d2027;--panel2:#22252d;--line:#2e323c;--text:#eef1f5;--muted:#a3abb8;--accent:#6f9dff;--accent2:#4ec98f;--warn:#e0a44a;--bad:#f07575;--r:6px}
+body.light{--bg:#f7f8f9;--panel:#fff;--panel2:#f0f1f4;--line:#dfe2e7;--text:#262b36;--muted:#6f7683;--accent:#2f6df0;--accent2:#1e9e6a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans','Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;display:flex;min-height:100vh}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:12px}
+aside{width:236px;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;font:700 18px 'IBM Plex Sans';padding:4px 8px 18px;letter-spacing:.02em}
+.logo b{width:28px;height:28px;border-radius:6px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:14px}
+.grp{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:16px 8px 6px}
+.nav{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:8px 10px;border-radius:var(--r);cursor:pointer;font:inherit}
+.nav:hover{background:var(--panel2);color:var(--text)}
+.nav.on{background:var(--panel2);color:var(--text);box-shadow:inset 2px 0 var(--accent)}
+main{flex:1;min-width:0}
+header{display:flex;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+header input{flex:1;max-width:420px;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:var(--r);font:inherit}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:8px 14px;border-radius:var(--r);cursor:pointer;font:inherit}
+.btn.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.btn.on{border-color:var(--accent);color:var(--accent)}
+#menu{display:none}
+.page{padding:28px;max-width:1400px}
+.eyebrow{color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.page>h1{font-size:28px;font-weight:600;margin-bottom:6px}.sub{color:var(--muted);margin-bottom:24px}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:2fr 1fr}.g3{grid-template-columns:1fr 2fr 1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card h3{font-size:14px;font-weight:600;margin-bottom:12px}
+.metric .v{font:700 26px 'IBM Plex Sans';margin-top:6px}.metric .l{color:var(--muted);font-size:12px}.up{color:var(--accent2);font-size:12px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;border:1px solid}
+.ok{color:var(--accent2);border-color:var(--accent2)}.wa{color:var(--warn);border-color:var(--warn)}.er{color:var(--bad);border-color:var(--bad)}
+.live{display:inline-flex;align-items:center;gap:6px;color:var(--accent2);font-size:12px;margin-bottom:16px}.live:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent2);animation:p 1.6s infinite}@keyframes p{50%{opacity:.3}}input.f{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:var(--r);padding:10px;font:inherit}#auth{position:fixed;inset:0;background:var(--bg);display:none;place-items:center;z-index:60}.empty{color:var(--muted);padding:18px 0}.err{color:var(--bad);font-size:13px;margin-top:8px}.auth-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}.auth-link{background:none;border:0;color:var(--accent);padding:0;cursor:pointer;font:inherit;font-size:12px}.auth-link:disabled,.btn:disabled{opacity:.55;cursor:not-allowed}.success{color:var(--accent2)!important}.passwrap{position:relative}.passwrap .f{padding-right:44px}.peek{position:absolute;right:4px;bottom:4px;width:36px;height:36px;padding:0}.helpbox{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.helpbox textarea{min-height:84px}.shot{display:block;max-width:100%;max-height:130px;margin-top:10px;border:1px solid var(--line);border-radius:var(--r);object-fit:contain}
+.bars{display:flex;align-items:flex-end;gap:5px;height:170px}.bars div{flex:1;background:linear-gradient(var(--accent),var(--accent2));border-radius:3px 3px 0 0;opacity:.85}
+textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:var(--r);padding:10px;font:inherit}
+textarea{min-height:200px;resize:vertical}label{display:block;color:var(--muted);font-size:12px;margin:12px 0 5px}
+.out{background:var(--panel2);border-radius:var(--r);padding:14px;min-height:200px;white-space:pre-wrap;line-height:1.6}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.canvas{position:relative;height:420px;background:radial-gradient(var(--line) 1px,transparent 1px) 0 0/20px 20px;border-radius:var(--r)}
+.node{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;cursor:pointer;min-width:130px}
+.node.sel{border-color:var(--accent)}.node small{color:var(--muted);display:block}
+.span{display:grid;grid-template-columns:170px 1fr 70px;gap:10px;align-items:center;padding:7px 0;cursor:pointer}
+.track{height:14px;background:var(--panel2);border-radius:4px;position:relative}.track i{position:absolute;height:100%;background:var(--accent);border-radius:4px}
+.doc{padding:10px;border-radius:var(--r);cursor:pointer}.doc:hover,.doc.on{background:var(--panel2)}
+#cmd{position:fixed;inset:0;background:#000a;display:none;align-items:flex-start;justify-content:center;padding-top:14vh;z-index:50}
+#cmd .box{width:min(560px,92vw);background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+#cmd input{width:100%;padding:16px;background:none;border:0;border-bottom:1px solid var(--line);color:var(--text);font:inherit;outline:0}
+#cmd button{display:block;width:100%;text-align:left;padding:11px 16px;background:none;border:0;color:var(--text);cursor:pointer;font:inherit}#cmd button:hover{background:var(--panel2)}
+@media(max-width:900px){aside{position:fixed;left:-260px;z-index:40;transition:.2s}aside.open{left:0}#menu{display:block}.g4{grid-template-columns:1fr 1fr}.g2,.g3{grid-template-columns:1fr}.page{padding:18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<aside id="side"></aside>
+<main>
+<header>
+<button class="btn" id="menu" onclick="side.classList.toggle('open')">☰</button>
+<input placeholder="Search or press Ctrl+K…" onfocus="openCmd();this.blur()" />
+<div style="flex:1"></div>
+<span class="mono" id="who" style="color:var(--muted)"></span><button class="btn" onclick="document.body.classList.toggle('light')">◐ Theme</button><button class="btn" onclick="signOut()">Sign out</button>
+</header>
+<div id="app"></div>
+</main>
+<div id="auth"><form class="card" style="width:min(380px,92vw)" onsubmit="auth('in',event)"><div class="logo"><b>N</b>NEXUS AI</div><p class="sub" style="margin-bottom:8px">Sign in to your workspace</p><label>Email</label><input class="f" id="ae" type="email" autocomplete="email" required><label>Password</label><div class="passwrap"><input class="f" id="ap" type="password" autocomplete="current-password" minlength="6" required><button class="btn peek" type="button" aria-label="Show password" onclick="togglePassword('ap',this)">◉</button></div><div class="row" style="margin-top:14px"><button class="btn pri" id="signin" type="submit">Sign in</button><button class="btn" id="signup" type="button" onclick="auth('up')">Create account</button></div><div class="auth-links"><button class="auth-link" id="forgot" type="button" onclick="forgotPassword()">Forgot password?</button><button class="auth-link" id="resend" type="button" onclick="resendConfirmation()">Resend confirmation</button></div><div id="am" class="err" role="status"></div><div class="helpbox"><button class="btn" type="button" onclick="toggleLoginHelp()">Diagnose sign-in issue</button><div id="loginhelp" style="display:none"><label>What happened?</label><textarea id="hd" maxlength="2000" placeholder="Describe the error message or what happened…"></textarea><label>Screenshot (optional, PNG/JPG/WebP under 2 MB)</label><input class="f" id="hs" type="file" accept="image/png,image/jpeg,image/webp" onchange="selectHelpScreenshot(this.files[0])"><img id="hp" class="shot" alt="Selected sign-in error screenshot" style="display:none"><button class="btn pri" id="hb" type="button" style="margin-top:10px" onclick="diagnoseLogin()">Explain likely cause</button><div id="hm" class="err" role="status"></div></div></div></form></div>
+<div id="recovery" style="position:fixed;inset:0;background:var(--bg);display:none;place-items:center;z-index:70"><form class="card" style="width:min(380px,92vw)" onsubmit="setNewPassword(event)"><div class="logo"><b>N</b>NEXUS AI</div><p class="sub" style="margin-bottom:8px">Choose a new password</p><label>New password</label><div class="passwrap"><input class="f" id="np" type="password" autocomplete="new-password" minlength="6" required><button class="btn peek" type="button" aria-label="Show new password" onclick="togglePassword('np',this)">◉</button></div><label>Confirm new password</label><div class="passwrap"><input class="f" id="npc" type="password" autocomplete="new-password" minlength="6" required><button class="btn peek" type="button" aria-label="Show confirmed password" onclick="togglePassword('npc',this)">◉</button></div><button class="btn pri" id="savepass" type="submit" style="margin-top:14px">Save new password</button><div id="rm" class="err" role="status"></div></form></div>
+<div id="cmd" onclick="if(event.target===this)closeCmd()"><div class="box"><input id="cq" placeholder="Jump to…" oninput="renderCmd()" /><div id="cl"></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===== Connection settings =====
+const APP_URL="https://project--4e30f8a6-2768-4559-9edd-9821f629331f.lovable.app"; // your published NEXUS AI app (runs the AI securely)
+const SB_URL="https://kbryxlphbuscnradioyo.supabase.co";
+const SB_KEY="sb_publishable_YTQr5UhWtl7xmvKttZsNIA_3nKdtbDr"; // public key, safe to share
+const sb=supabase.createClient(SB_URL,SB_KEY);
+
+const NAV=[["Overview",[["dashboard","Dashboard"]]],["Build",[["gateway","AI Gateway"],["playground","Playground"],["agents","Agent Builder"]]],["Knowledge",[["memory","Project Memory"]]],["Observe",[["evals","Evaluation Lab"],["traces","Traces"],["costs","Costs"]]],["System",[["about","About"]]]];
+// Model catalogue: [id, name, provider, quality, $ per 1M output tokens]
+const MODELS=[["openai/gpt-6-astra","GPT-6 Astra","OpenAI",98,10]];
+const mName=id=>(MODELS.find(m=>m[0]==id)||[,id])[1];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>"$"+Number(n||0).toFixed(Number(n)>0&&Number(n)<.01?4:2);
+const $=h=>document.getElementById("app").innerHTML=h;
+const pill=s=>`<span class="pill ${{completed:"ok",running:"wa",queued:"wa",failed:"er",draft:"wa"}[s]||"ok"}">${esc(s)}</span>`;
+const head=(e,t,s)=>`<div class="eyebrow">${e}</div><h1>${t}</h1><p class="sub">${s}</p><div class="live">Live · updated ${new Date().toLocaleTimeString()}</div>`;
+const empty=t=>`<div class="empty">${t}</div>`;
+
+let user=null,project=null,REQ=[],DOCS=[],EXP=[],SPANS=[];
+let policy="Balanced",selNode=0,selReq=null,selDoc=0,cur="dashboard",busy=false,pmSel=MODELS[0][0],stopped=0;
+let requestController=null, refreshTimer=null, liveTimer=null;
+
+// ===== Auth & workspace =====
+let helpScreenshot=null;
+function togglePassword(id,button){const input=document.getElementById(id),show=input.type==="password";input.type=show?"text":"password";button.textContent=show?"⊘":"◉";button.setAttribute("aria-label",show?"Hide password":"Show password")}
+function toggleLoginHelp(){loginhelp.style.display=loginhelp.style.display==="none"?"block":"none"}
+function selectHelpScreenshot(file){helpScreenshot=null;hp.style.display="none";hm.textContent="";if(!file)return;if(!/^image\/(png|jpeg|webp)$/.test(file.type)||file.size>2000000){hm.textContent="Choose a PNG, JPG, or WebP image under 2 MB.";hs.value="";return}const reader=new FileReader();reader.onload=()=>{helpScreenshot=String(reader.result);hp.src=helpScreenshot;hp.style.display="block"};reader.readAsDataURL(file)}
+async function diagnoseLogin(){if(!hd.value.trim()&&!helpScreenshot){hm.textContent="Describe the issue or add a screenshot.";return}hb.disabled=true;hm.classList.remove("success");hm.textContent="Reviewing the sign-in issue…";try{const r=await fetch(APP_URL+"/api/public/login-help",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({description:hd.value,screenshot:helpScreenshot})});const j=await r.json().catch(()=>({error:"The diagnosis returned an unreadable response."}));if(!r.ok||j.error)throw new Error(j.error||"Diagnosis failed.");hm.classList.add("success");hm.textContent=j.text}catch(e){hm.textContent=e.message||"Sign-in diagnosis is temporarily unavailable."}finally{hb.disabled=false}}
+let authBusy=false;
+function authMessage(text,ok=false){am.classList.toggle("success",ok);am.textContent=text}
+function friendlyAuthError(error){const code=error?.code||"",msg=(error?.message||"").toLowerCase();if(code==="email_not_confirmed"||msg.includes("email not confirmed"))return "Confirm your email first. Use Resend confirmation below, then open the newest email.";if(code==="invalid_credentials"||msg.includes("invalid login"))return "That email or password is incorrect. Use Forgot password if needed.";if(error?.status===429||msg.includes("rate limit"))return "Too many attempts. Wait one minute, then try once more.";return error?.message||"Something went wrong. Please try again."}
+function setAuthBusy(value){authBusy=value;[signin,signup,forgot,resend].forEach(b=>b.disabled=value)}
+async function auth(kind,event){event?.preventDefault();if(authBusy)return;authMessage("");const email=ae.value.trim(),password=ap.value;if(!email||!password){authMessage("Enter both your email and password.");return}setAuthBusy(true);try{const callback=location.origin+location.pathname;const r=kind==="in"?await sb.auth.signInWithPassword({email,password}):await sb.auth.signUp({email,password,options:{emailRedirectTo:callback}});if(r.error)throw r.error;if(kind==="up"&&!r.data.session)authMessage("Account created. Check your email and click the confirmation link, then sign in.",true);else authMessage("Signed in.",true)}catch(e){authMessage(friendlyAuthError(e))}finally{setAuthBusy(false)}}
+async function resendConfirmation(){if(authBusy)return;const email=ae.value.trim();if(!email){authMessage("Enter your email first.");return}setAuthBusy(true);try{const r=await sb.auth.resend({type:"signup",email,options:{emailRedirectTo:location.origin+location.pathname}});if(r.error)throw r.error;authMessage("Confirmation email sent. Open the newest message in your inbox.",true)}catch(e){authMessage(friendlyAuthError(e))}finally{setAuthBusy(false)}}
+async function forgotPassword(){if(authBusy)return;const email=ae.value.trim();if(!email){authMessage("Enter your email first.");return}setAuthBusy(true);try{const r=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(r.error)throw r.error;authMessage("Password reset email sent. Open the link to choose a new password.",true)}catch(e){authMessage(friendlyAuthError(e))}finally{setAuthBusy(false)}}
+async function setNewPassword(event){event.preventDefault();const password=np.value,confirm=npc.value;rm.classList.remove("success");rm.textContent="";if(password.length<6){rm.textContent="Use at least 6 characters.";return}if(password!==confirm){rm.textContent="The passwords do not match.";return}savepass.disabled=true;const r=await sb.auth.updateUser({password});savepass.disabled=false;if(r.error){rm.textContent=friendlyAuthError(r.error);return}rm.classList.add("success");rm.textContent="Password updated. You are now signed in.";setTimeout(()=>{recovery.style.display="none";location.hash="dashboard"},900)}
+async function ensureProject(){
+ const wr=await sb.from("workspaces").select("id").limit(1);if(wr.error)throw wr.error;
+ let wid=wr.data?.[0]?.id;
+ if(!wid){wid=crypto.randomUUID();
+  let e=(await sb.from("workspaces").insert({id:wid,name:"My workspace",slug:"ws-"+wid.slice(0,8),created_by:user.id})).error;if(e)throw e;
+  e=(await sb.from("workspace_memberships").insert({workspace_id:wid,user_id:user.id,role:"owner"})).error;if(e)throw e;}
+ const pr=await sb.from("projects").select("id,name").eq("workspace_id",wid).limit(1);if(pr.error)throw pr.error;
+ let ps=pr.data;
+ if(!ps?.length){const r=await sb.from("projects").insert({workspace_id:wid,name:"NEXUS Main",created_by:user.id}).select("id,name").single();if(r.error)throw r.error;ps=[r.data]}
+ project=ps[0];
+}
+async function load(){
+ const since=new Date(Date.now()-30*864e5).toISOString();
+ const results=await Promise.all([
+  sb.from("ai_requests").select("*").eq("project_id",project.id).gte("created_at",since).order("created_at",{ascending:false}).limit(1000),
+  sb.from("memory_documents").select("*").eq("project_id",project.id).order("created_at",{ascending:false}),
+  sb.from("experiments").select("*").eq("project_id",project.id).order("created_at",{ascending:false}).limit(50)]);
+ const failed=results.find(x=>x.error);if(failed?.error)throw failed.error;
+ REQ=results[0].data||[];DOCS=results[1].data||[];EXP=results[2].data||[];
+}
+async function loadSpans(){if(!selReq){SPANS=[];return}const r=await sb.from("trace_spans").select("*").eq("request_id",selReq).order("created_at");if(r.error)throw r.error;SPANS=r.data||[]}
+let rt;
+function live(){if(rt)sb.removeChannel(rt);if(liveTimer)clearTimeout(liveTimer);if(refreshTimer)clearInterval(refreshTimer);
+ rt=sb.channel("nexus-"+project.id).on("postgres_changes",{event:"*",schema:"public",table:"ai_requests",filter:`project_id=eq.${project.id}`},()=>{clearTimeout(liveTimer);liveTimer=setTimeout(async()=>{try{await load();if(cur==="traces")await loadSpans();if(!busy&&["dashboard","gateway","traces","costs"].includes(cur))go(cur)}catch(e){console.error(e)}},400)}).subscribe();
+ refreshTimer=setInterval(()=>{if(!busy&&cur==="dashboard")go(cur)},15000);
+}
+async function signOut(){if(requestController)requestController.abort();if(rt)await sb.removeChannel(rt);if(refreshTimer)clearInterval(refreshTimer);await sb.auth.signOut()}
+sb.auth.onAuthStateChange((ev,s)=>{if(ev==="PASSWORD_RECOVERY")recovery.style.display="grid";setTimeout(()=>start(s),0)});
+let started=null;
+async function start(s){
+ if(!s){user=null;project=null;started=null;who.textContent="";document.getElementById("auth").style.display="grid";return}
+ if(started===s.user.id&&project)return;started=s.user.id;user=s.user;document.getElementById("auth").style.display="none";who.textContent=user.email||"Signed in";
+ $(`<div class="page">${empty("Loading your workspace…")}</div>`);
+ try{await ensureProject();await load();live();go(P[location.hash.slice(1)]?location.hash.slice(1):"dashboard")}
+ catch(e){started=null;$(`<div class="page"><div class="err">Could not load workspace: ${esc(e.message)}</div><button class="btn" style="margin-top:12px" onclick="start((await sb.auth.getSession()).data.session)">Try again</button></div>`)}
+}
+void sb.auth.getSession().then(({data})=>start(data.session));
+
+// ===== AI call (through the secure NEXUS AI app) =====
+async function ask(prompt,model,signal){
+ const {data:{session},error}=await sb.auth.getSession();
+ if(error||!session)throw new Error("Your session expired. Sign in again.");
+ let r;try{r=await fetch(APP_URL+"/api/public/nexus-chat",{method:"POST",signal,headers:{"content-type":"application/json",authorization:"Bearer "+session.access_token},body:JSON.stringify({prompt,model,projectId:project.id})})}catch(e){if(e.name==="AbortError")throw e;throw new Error("The secure AI service is not available yet. Publish the NEXUS AI app, then try again.")}
+ const j=await r.json().catch(()=>({error:r.status===404?"The secure AI service is not published yet.":"The AI service returned an unreadable response."}));
+ if(!r.ok||j.error)throw new Error(j.error||`Request failed (${r.status})`);return j;
+}
+
+// ===== Stats =====
+function stats(list){const done=list.filter(r=>r.status=="completed"),lat=done.map(r=>r.latency_ms).sort((a,b)=>a-b);
+ return{n:list.length,cost:list.reduce((s,r)=>s+Number(r.cost_usd),0),p95:lat.length?lat[Math.min(lat.length-1,Math.floor(lat.length*.95))]:0,avg:lat.length?Math.round(lat.reduce((a,b)=>a+b,0)/lat.length):0,ok:list.filter(r=>r.status!=="running").length?done.length/list.filter(r=>r.status!=="running").length*100:0,tok:list.reduce((s,r)=>s+r.prompt_tokens+r.completion_tokens,0)}}
+const day=()=>REQ.filter(r=>Date.now()-new Date(r.created_at)<864e5);
+
+const P={
+dashboard:()=>{const s=stats(day()),h=Array(24).fill(0);day().forEach(r=>{h[23-Math.floor((Date.now()-new Date(r.created_at))/36e5)]++});const mx=Math.max(1,...h);
+ const mix={};day().forEach(r=>mix[r.model]=(mix[r.model]||0)+1);const mixE=Object.entries(mix).sort((a,b)=>b[1]-a[1]);
+ return head("Overview","System pulse",`Real activity for project ${esc(project.name)} — updates instantly when a request runs.`)+`
+<div class="grid g4">${[["Requests (24h)",s.n],["p95 latency",s.p95+" ms"],["Spend today",money(s.cost)],["Success rate",s.n?s.ok.toFixed(1)+"%":"—"]].map(m=>`<div class="card metric"><div class="l">${m[0]}</div><div class="v">${m[1]}</div></div>`).join("")}</div>
+<div class="grid g2" style="margin-top:16px"><div class="card"><h3>Request volume · last 24 hours</h3><div class="bars">${h.map(v=>`<div title="${v} requests" style="height:${Math.max(2,v/mx*100)}%"></div>`).join("")}</div></div>
+<div class="card"><h3>Routing mix</h3>${mixE.length?mixE.map(([m,c])=>{const p=Math.round(c/s.n*100);return`<div style="margin:10px 0"><div class="row" style="justify-content:space-between"><span>${esc(mName(m))}</span><span class="mono">${p}%</span></div><div class="track" style="margin-top:5px"><i style="width:${p}%"></i></div></div>`}).join(""):empty("No requests yet. Run one in the Playground.")}</div></div>
+<div class="card" style="margin-top:16px"><h3>Recent requests</h3>${REQ.length?`<table><tr><th>Time</th><th>Task</th><th>Model</th><th>Status</th><th>Latency</th><th>Tokens</th><th>Cost</th></tr>${REQ.slice(0,10).map(r=>`<tr style="cursor:pointer" onclick="openTrace('${r.id}')"><td class="mono">${new Date(r.created_at).toLocaleTimeString()}</td><td>${esc(r.task_type)}</td><td>${esc(mName(r.model))}</td><td>${pill(r.status)}</td><td class="mono">${r.latency_ms} ms</td><td class="mono">${r.prompt_tokens+r.completion_tokens}</td><td class="mono">${money(r.cost_usd)}</td></tr>`).join("")}</table>`:empty("No requests yet. Open the Playground and press Run.")}</div>`},
+
+gateway:()=>{const w={Quality:[1,0,0],Balanced:[.5,.25,.25],Cost:[.2,.1,.7],Speed:[.2,.7,.1]}[policy];
+ const rows=MODELS.map(m=>{const l=REQ.filter(r=>r.model==m[0]),s=stats(l);const lat=s.avg||1500;return{m,s,lat,score:m[3]*w[0]+Math.max(0,100-lat/40)*w[1]+(100-m[4]*8)*w[2]}}).sort((a,b)=>b.score-a.score);
+ return head("Build","AI Gateway","Every model is scored on quality, measured latency and cost. Latency comes from your real requests.")+`
+<div class="row" style="margin-bottom:16px">${["Quality","Balanced","Cost","Speed"].map(p=>`<button class="btn ${p==policy?"on":""}" onclick="policy='${p}';go('gateway')">${p}</button>`).join("")}</div>
+<div class="grid g2"><div class="card"><h3>Model fleet</h3><table><tr><th>Model</th><th>Provider</th><th>Quality</th><th>Avg latency</th><th>Requests</th><th>$/1M out</th></tr>${rows.map(({m,s})=>`<tr><td>${m[1]}</td><td>${m[2]}</td><td class="mono">${m[3]}</td><td class="mono">${s.avg?s.avg+" ms":"no data"}</td><td class="mono">${s.n}</td><td class="mono">$${m[4]}</td></tr>`).join("")}</table></div>
+<div class="card"><h3>Route decision inspector</h3><p class="sub" style="margin-bottom:10px">Policy: <b>${policy}</b></p>${rows.map((x,i)=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><div class="row" style="justify-content:space-between"><b>${x.m[1]}</b>${i==0?'<span class="pill ok">selected</span>':i==1?'<span class="pill wa">fallback</span>':'<span class="pill" style="color:var(--muted)">ranked</span>'}</div><div class="mono" style="color:var(--muted)">score ${x.score.toFixed(1)}</div></div>`).join("")}<button class="btn pri" style="margin-top:14px" onclick="pmSel='${rows[0].m[0]}';go('playground')">Use ${rows[0].m[1]} in Playground</button></div></div>`},
+
+playground:()=>head("Build","Playground","Real AI responses. Every run is saved and appears in Dashboard, Traces and Costs.")+`
+<div class="grid g3"><div class="card"><h3>Config</h3><label>Model</label><select id="pm">${MODELS.map(m=>`<option value="${m[0]}" ${m[0]==pmSel?"selected":""}>${m[1]}</option>`)}</select><label>Project</label><div>${esc(project.name)}</div></div>
+<div class="card"><h3>Prompt</h3><textarea id="pp">Explain how an AI gateway chooses between models in three sentences.</textarea><div class="row" style="margin-top:10px"><button class="btn pri" id="rb" onclick="run()">Run ▶</button><button class="btn" onclick="stopRun()">Stop</button></div></div>
+<div class="card"><h3>Response</h3><div class="out" id="po">Press Run to get a real AI answer.</div><div class="mono" id="pst" style="color:var(--muted);margin-top:8px"></div></div></div>`,
+
+agents:()=>{const N=AG;return head("Build","Agent Builder","A working pipeline: retrieve from Project Memory, then answer with the gateway-selected model.")+`
+<div class="grid g2"><div class="card"><div class="canvas"><svg style="position:absolute;inset:0;width:100%;height:100%">${[[0,1],[1,2],[2,3],[3,4]].map(([a,b])=>`<line x1="${N[a][2]+130}" y1="${N[a][3]+22}" x2="${N[b][2]}" y2="${N[b][3]+22}" stroke="var(--accent)" stroke-width="1.5"/>`).join("")}</svg>${N.map((n,i)=>`<div class="node ${i==selNode?"sel":""}" style="left:${n[2]}px;top:${n[3]}px" onclick="selNode=${i};go('agents')"><b>${n[0]}</b><small id="ns${i}">${n[1]}</small></div>`).join("")}</div></div>
+<div class="card"><h3>Node inspector</h3><label>Name</label><div>${N[selNode][0]}</div><label>Does</label><div style="color:var(--muted)">${N[selNode][4]}</div><label>Question</label><textarea id="aq" style="min-height:80px">What should we do during a provider outage?</textarea><button class="btn pri" style="margin-top:12px" onclick="runAgent(this)">Run workflow</button><div class="out" id="ao" style="margin-top:12px;min-height:80px"></div></div></div>`},
+
+memory:()=>{const d=DOCS[selDoc];return head("Knowledge","Project Memory","Documents saved in your database that the AI can use as context.")+`
+<div class="grid g3"><div class="card"><h3>Documents (${DOCS.length})</h3>${DOCS.map((d,i)=>`<div class="doc ${i==selDoc?"on":""}" onclick="selDoc=${i};go('memory')">📄 ${esc(d.title)}</div>`).join("")||empty("No documents yet.")}
+<label>New title</label><input class="f" id="nt"><label>Content</label><textarea id="nc" style="min-height:90px"></textarea><button class="btn pri" style="margin-top:10px" onclick="addDoc()">Save document</button><div id="me" class="err"></div></div>
+<div class="card">${d?`<h3>${esc(d.title)}</h3><p style="line-height:1.7;white-space:pre-wrap">${esc(d.content)}</p><button class="btn" style="margin-top:14px" onclick="delDoc('${d.id}')">Delete</button>`:empty("Add a document to get started.")}</div>
+<div class="card"><h3>Memory search</h3><input class="f" placeholder="Search…" oninput="ms(this.value)"><div id="mr" style="margin-top:10px;color:var(--muted)">Type to search your documents</div><p class="mono" style="color:var(--muted);margin-top:12px">Keyword retrieval</p></div></div>`},
+
+evals:()=>head("Observe","Evaluation Lab","Run the same prompt on two models with real AI and compare quality, speed and cost.")+`
+<div class="grid g2"><div class="card"><h3>Experiment runs</h3>${EXP.length?`<table><tr><th>Experiment</th><th>Winner</th><th>Scores</th><th>When</th><th>Status</th></tr>${EXP.map(e=>{const m=e.metrics||{};return`<tr><td>${esc(e.name)}</td><td>${esc(mName(m.winner||""))}</td><td class="mono">${(m.results||[]).map(r=>esc(mName(r.model))+": "+r.score).join("<br>")}</td><td class="mono">${new Date(e.created_at).toLocaleString()}</td><td>${pill(e.status)}</td></tr>`}).join("")}</table>`:empty("No experiments yet. Run one on the right.")}</div>
+<div class="card"><h3>New comparison</h3><label>Name</label><input class="f" id="en" value="Gateway explainer"><label>Prompt</label><textarea id="ep" style="min-height:90px">List 3 benefits of model routing, as a JSON array of strings.</textarea><label>Must contain (evaluator)</label><input class="f" id="ek" value="["><label>Model A</label><select id="ea">${MODELS.map(m=>`<option value="${m[0]}">${m[1]}</option>`)}</select><label>Model B</label><select id="eb">${MODELS.map((m,i)=>`<option value="${m[0]}" ${i==2?"selected":""}>${m[1]}</option>`)}</select><button class="btn pri" style="margin-top:12px" onclick="runEval(this)">Run experiment</button><div id="eo" class="mono" style="margin-top:10px;white-space:pre-wrap"></div></div></div>`,
+
+traces:()=>{const r=REQ.find(x=>x.id==selReq);const tot=Math.max(1,SPANS.reduce((s,x)=>s+x.duration_ms,0));let off=0;
+ return head("Observe","Traces","Every real request is recorded as timed stages from your database.")+`
+<div class="grid g2"><div class="card">${r?`<h3>${esc(mName(r.model))} · ${r.latency_ms} ms · ${pill(r.status)}</h3>${SPANS.map(s=>{const l=off/tot*100,w=s.duration_ms/tot*100;off+=s.duration_ms;return`<div class="span"><span>${esc(s.stage)}</span><div class="track"><i style="left:${l}%;width:${Math.max(1,w)}%;${s.status=="failed"?"background:var(--bad)":""}"></i></div><span class="mono">${s.duration_ms} ms</span></div>`}).join("")||empty("No stages recorded.")}
+${SPANS.filter(s=>s.error_message).map(s=>`<div class="err">${esc(s.stage)}: ${esc(s.error_message)}</div>`).join("")}`:empty("Pick a request on the right.")}</div>
+<div class="card"><h3>Requests</h3>${REQ.slice(0,25).map(x=>`<div class="doc ${x.id==selReq?"on":""}" onclick="openTrace('${x.id}')"><div class="row" style="justify-content:space-between"><span>${esc(mName(x.model))}</span>${pill(x.status)}</div><small class="mono" style="color:var(--muted)">${new Date(x.created_at).toLocaleString()} · ${x.latency_ms} ms</small></div>`).join("")||empty("No requests yet.")}</div></div>`},
+
+costs:()=>{const now=new Date(),mtd=REQ.filter(r=>new Date(r.created_at)>=new Date(now.getFullYear(),now.getMonth(),1)),s=stats(mtd),budget=+(localStorage.nxBudget||50),pct=Math.min(100,s.cost/budget*100),fc=s.cost/now.getDate()*new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+ const by={};mtd.forEach(r=>by[r.model]=(by[r.model]||0)+Number(r.cost_usd));
+ return head("Observe","Costs","Real spend calculated from the tokens of every request.")+`
+<div class="grid g4">${[["Month to date",money(s.cost)],["Budget",money(budget)],["Forecast",money(fc)],["Tokens used",s.tok.toLocaleString()]].map(m=>`<div class="card metric"><div class="l">${m[0]}</div><div class="v">${m[1]}</div></div>`).join("")}</div>
+<div class="grid g2" style="margin-top:16px"><div class="card"><h3>Budget used</h3><div class="track" style="height:20px"><i style="width:${pct}%;${pct>80?"background:var(--bad)":""}"></i></div><p class="sub" style="margin-top:8px">${pct.toFixed(1)}% of monthly budget</p><label>Monthly budget ($)</label><div class="row"><input class="f" id="bg" type="number" value="${budget}" style="max-width:140px"><button class="btn" onclick="localStorage.nxBudget=bg.value;go('costs')">Save</button></div></div>
+<div class="card"><h3>Spend by model</h3>${Object.entries(by).map(([m,c])=>`<div class="row" style="justify-content:space-between;padding:6px 0"><span>${esc(mName(m))}</span><span class="mono">${money(c)}</span></div>`).join("")||empty("No spend yet this month.")}</div></div>`},
+
+about:()=>`<div class="eyebrow">About</div><h1>What is NEXUS AI?</h1><p class="sub">An engineering workspace for building, routing, testing and monitoring AI systems.</p>
+<div class="grid g2"><div class="card" style="line-height:1.8"><p><b>The problem:</b> teams use many AI models, but it's hard to know which is best, what it costs, and why something failed.</p><p style="margin-top:10px"><b>The solution:</b> NEXUS AI routes each request to the best model, evaluates quality, stores project knowledge, and traces every step.</p><p style="margin-top:10px"><b>Five pillars:</b> AI Gateway · Evaluation Lab · Agent Builder · Project Memory · Observability.</p></div>
+<div class="card"><h3>How it works</h3><p style="color:var(--muted);line-height:1.7">Sign-in and data come from the NEXUS AI cloud database, live updates arrive in real time, and AI answers are generated securely by the NEXUS AI app, so no secret keys are ever in this page.</p></div></div>`
+};
+
+function stopRun(){stopped=1;if(requestController)requestController.abort();requestController=null;busy=false;if(window.po)po.textContent="Stopped.";if(window.rb)rb.disabled=false}
+async function run(){if(busy)return;const prompt=pp.value.trim();if(!prompt){po.textContent="Enter a prompt first.";return}busy=true;stopped=0;requestController=new AbortController();pmSel=pm.value;rb.disabled=true;po.textContent="Thinking…";pst.textContent="";
+ try{const j=await ask(prompt,pm.value,requestController.signal);if(stopped)return;po.textContent=j.text||"The AI returned no text.";
+  pst.textContent=`${mName(pm.value)} · ${j.latencyMs} ms · ${j.promptTokens+j.completionTokens} tokens · ${money(j.costUsd)}`}
+ catch(e){if(e.name!=="AbortError"&&!stopped)po.innerHTML=`<span class="err">${esc(e.message)}</span>`}
+ finally{requestController=null;busy=false;if(window.rb)rb.disabled=false}}
+
+const AG=[["Input","Trigger",20,60,"Takes your question."],["Retrieve","Memory",200,160,"Finds matching documents in Project Memory."],["Route","Gateway",380,60,"Routes securely to GPT-6 Astra."],["Generate","Model",560,160,"Asks the AI with the retrieved context."],["Respond","Output",560,300,"Returns the grounded answer."]];
+function search(q){const w=q.toLowerCase().split(/\W+/).filter(x=>x.length>=2);return DOCS.map(d=>({d,s:w.filter(x=>(d.title+" "+d.content).toLowerCase().includes(x)).length})).filter(x=>x.s).sort((a,b)=>b.s-a.s).map(x=>x.d)}
+async function runAgent(b){if(busy)return;busy=true;b.disabled=true;const q=aq.value,set=(i,t)=>{const e=document.getElementById("ns"+i);if(e)e.textContent=t};
+ try{set(0,"✓ received");const hits=search(q).slice(0,3);set(1,`✓ ${hits.length} docs`);set(2,"✓ GPT-6 Astra");set(3,"running…");ao.textContent="Working…";
+  const ctx=hits.map(d=>`## ${d.title}\n${d.content}`).join("\n\n");
+  const j=await ask((ctx?`Use this project knowledge:\n${ctx}\n\n`:"")+"Question: "+q,"openai/gpt-6-astra");set(3,`✓ ${j.latencyMs} ms`);set(4,"✓ done");
+  ao.textContent=j.text+(hits.length?`\n\nSources: ${hits.map(h=>h.title).join(", ")}`:"\n\n(No matching memory documents — answered without context.)")}
+ catch(e){ao.innerHTML=`<span class="err">${esc(e.message)}</span>`;set(3,"failed")}finally{busy=false;b.disabled=false}}
+
+async function addDoc(){const title=nt.value.trim(),content=nc.value.trim();if(!title||!content){me.textContent="Add a title and content.";return}
+ const r=await sb.from("memory_documents").insert({project_id:project.id,title,content,created_by:user.id,retrieval_mode:"keyword"});if(r.error){me.textContent=r.error.message;return}await load();selDoc=0;go("memory")}
+async function delDoc(id){if(!confirm("Delete this document?"))return;const r=await sb.from("memory_documents").delete().eq("id",id);if(r.error){alert(r.error.message);return}await load();selDoc=0;go("memory")}
+function ms(q){mr.innerHTML=q.trim()?(search(q).map(d=>"• "+esc(d.title)).join("<br>")||DOCS.filter(d=>(d.title+d.content).toLowerCase().includes(q.toLowerCase())).map(d=>"• "+esc(d.title)).join("<br>")||"No matches"):"Type to search your documents"}
+
+async function runEval(b){if(busy)return;busy=true;b.disabled=true;const models=[ea.value,eb.value],key=ek.value;eo.textContent="Running both models…";
+ const ins=await sb.from("experiments").insert({project_id:project.id,name:en.value||"Experiment",status:"running",created_by:user.id,models,prompt_versions:[{version:1,content:ep.value}],evaluators:[{type:"contains",value:key},{type:"latency"},{type:"cost"}]}).select("id").single();
+ try{if(ins.error)throw ins.error;const res=await Promise.all(models.map(async m=>{try{const j=await ask(ep.value,m);const pass=!key||j.text.includes(key);
+   const score=Math.round((pass?60:0)+Math.max(0,25-j.latencyMs/400)+Math.max(0,15-j.costUsd*3000));return{model:m,score,pass,latency:j.latencyMs,cost:j.costUsd,sample:j.text.slice(0,300)}}catch(e){return{model:m,score:0,pass:false,error:e.message}}}));
+  const win=[...res].sort((a,b)=>b.score-a.score)[0];
+  await sb.from("experiments").update({status:res.every(r=>r.error)?"failed":"completed",metrics:{results:res,winner:win.model}}).eq("id",ins.data.id);
+  eo.textContent=res.map(r=>`${mName(r.model)}: ${r.error?"failed — "+r.error:`score ${r.score} · ${r.pass?"passed":"failed"} check · ${r.latency} ms · ${money(r.cost)}`}`).join("\n")+`\n\nWinner: ${mName(win.model)}`;
+  await load();setTimeout(()=>{busy=false;go("evals")},2500)}
+ catch(e){eo.innerHTML=`<span class="err">${esc(e.message)}</span>`;busy=false}finally{b.disabled=false}}
+
+async function openTrace(id){selReq=id;await loadSpans();go("traces")}
+async function go(id){cur=id;location.hash=id;if(id=="traces"&&!selReq&&REQ.length>0){selReq=REQ[0].id;await loadSpans()}
+ $(`<div class="page">${P[id]()}</div>`);document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("on",b.dataset.id==id));side.classList.remove("open");document.title=`NEXUS AI — ${(NAV.flatMap(g=>g[1]).find(x=>x[0]==id)||[,id])[1]}`}
+side.innerHTML=`<div class="logo"><b>N</b>NEXUS AI</div>`+NAV.map(g=>`<div class="grp">${g[0]}</div>`+g[1].map(([id,l])=>`<button class="nav" data-id="${id}" onclick="go('${id}')">${l}</button>`).join("")).join("");
+function openCmd(){cmd.style.display="flex";cq.value="";renderCmd();cq.focus()}
+function closeCmd(){cmd.style.display="none"}
+function renderCmd(){const q=cq.value.toLowerCase();cl.innerHTML=NAV.flatMap(g=>g[1]).filter(x=>x[1].toLowerCase().includes(q)).map(x=>`<button onclick="closeCmd();go('${x[0]}')">→ ${x[1]}</button>`).join("")}
+addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key=="k"){e.preventDefault();openCmd()}if(e.key=="Escape")closeCmd()});
+</script>
+</body>
+</html>
